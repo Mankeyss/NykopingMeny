@@ -11,16 +11,16 @@ let time = new Date();
 
 const hour = time.getHours()
 console.log(hour);
+const timeOfDay = hour >= 16 ? 'dinner' : 'lunch';
+console.log(timeOfDay);
 
-var obj;
+var menu;
 
 fetch('../assets/json/mat.json')
   .then(res => res.json())
   .then(data => {
-    obj = data;
+    menu = data[0];
    })
   .then(() => {
-    console.log(obj);
+    console.log(menu);
    });
-
-console.log(obj);
