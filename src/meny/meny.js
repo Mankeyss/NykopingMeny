@@ -6,6 +6,8 @@ if(params.has('restaurang')) {
     //window.location.href = '../home.html';
 }
 
+let restaurang = params.get('restaurang');
+
 //Set logo
 switch(params.get('restaurang')) {
     case 'at':
@@ -60,4 +62,21 @@ fetch('../assets/json/mat.json')
         price.classList.add('item-price');
         foodItem.appendChild(price);
     });
-   })
+   });
+
+if(restaurang == 'hemkop') {
+    let test = fetch('http://spelhagenscatering.se', {"mode":"no-cors"}).then((response) => {
+            console.log(response.text());
+            return response.text();
+        }
+    );
+
+    console.log(test);
+
+    (async () => {
+        const worker = await Tesseract.createWorker('swe');
+        const ret = await worker.recognize('http://files.builder.misssite.com/67/bd/67bd64b0-ac82-4204-893f-fd436f1f605a.jpeg');
+        console.log(ret.data.text);
+        await worker.terminate();
+      })();
+}
