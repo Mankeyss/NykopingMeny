@@ -68,7 +68,13 @@ if(restaurang == 'hemkop') {
     
     fetch('https://corsproxy.io/?' + encodeURIComponent('http://spelhagenscatering.se'))
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result)
+        //Create Element
+        const code = document.createElement('html');
+        code.innerHTML = result;
+        console.log(code.querySelector())
+      })
       .catch((error) => console.error(error));
 
     //Read image
