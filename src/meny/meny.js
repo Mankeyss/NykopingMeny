@@ -6,7 +6,20 @@ if(params.has('restaurang')) {
     //window.location.href = '../home.html';
 }
 
-//Retrieve foods
+//Set logo
+switch(params.get('restaurang')) {
+    case 'at':
+        document.getElementById('restaurang-icon').src = '../assets/at-logga.png'
+        break;
+    case 'hemkop':
+        document.getElementById('restaurang-icon').src = '../assets/hemköp-logga.png'
+        break;
+    case 'NSU':
+        document.getElementById('restaurang-icon').src = '../assets/NSU-logga.png'
+        break;
+}
+
+//Retrieve time
 let time = new Date();
 
 const hour = time.getHours()
@@ -14,13 +27,37 @@ console.log(hour);
 const timeOfDay = hour >= 16 ? 'dinner' : 'lunch';
 console.log(timeOfDay);
 
-var menu;
+
 
 fetch('../assets/json/mat.json')
   .then(res => res.json())
   .then(data => {
-    menu = data[0];
+    const menu = data[0]["menu"][timeOfDay];
+    //Create Item Displays
+    menu.forEach(item => {
+        //Create Item Div
+        const foodItem = document.createElement("div");
+        foodItem.classList.add('item');
+        document.getElementById('rätter').appendChild(foodItem);
+
+        //Create Food Image
+        const foodImage = document.createElement('img');
+        foodImage.src = '../assets/food/grilled-chicken.jpg';
+        foodImage.classList.add('item-img');
+        foodItem.appendChild(foodImage);
+
+        //Create Name Paragraph
+        const name = document.createElement('p');
+        const nameText = document.createTextNode(item["name"]);
+        name.appendChild(nameText)
+        name.classList.add('item-name');
+        foodItem.appendChild(name);
+        
+        //Create Price Paragraph
+        const price = document.createElement('p');
+        const priceText = document.createTextNode(item["price"]);
+        price.appendChild(priceText)
+        price.classList.add('item-price');
+        foodItem.appendChild(price);
+    });
    })
-  .then(() => {
-    console.log(menu);
-   });

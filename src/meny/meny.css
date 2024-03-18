@@ -29,6 +29,8 @@ body {
     align-items: center;
     width: 100vw;
     margin-top: 50px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 .item {

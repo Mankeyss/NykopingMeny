@@ -1,5 +1,5 @@
 [
-    {"brand":"Ät.","short-brand":"at.","menu":{
+    {"brand":"Ät.","short-brand":"at","menu":{
         "lunch":[{"name":"Chicken","price":"200kr"}],
         "dinner":[{"name":"Pizza", "price":"200kr"}]
     }},
