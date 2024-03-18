@@ -1,0 +1,16 @@
+[
+    {"brand":"at.","menu":{
+        "lunch":[{"name":"Chicken","price":"200kr"}],
+        "dinner":[{"name":"Pizza", "price":"200kr"}]
+    }},
+
+    {"brand":"hemkop","menu":{
+        "lunch":[{"name":"Chicken","price":"200kr"}],
+        "dinner":[{"name":"Pizza", "price":"200kr"}]
+    }},
+
+    {"brand":"NSU","menu":{
+        "lunch":[{"name":"Chicken","price":"200kr"}],
+        "dinner":[{"name":"Pizza", "price":"200kr"}]
+    }}
+]
