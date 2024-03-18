@@ -65,18 +65,17 @@ fetch('../assets/json/mat.json')
    });
 
 if(restaurang == 'hemkop') {
-    let test = fetch('http://spelhagenscatering.se', {"mode":"no-cors"}).then((response) => {
-            console.log(response.text());
-            return response.text();
-        }
-    );
+    
+    fetch('https://corsproxy.io/?' + encodeURIComponent('http://spelhagenscatering.se'))
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
 
-    console.log(test);
-
-    (async () => {
+    //Read image
+    /*(async () => {
         const worker = await Tesseract.createWorker('swe');
         const ret = await worker.recognize('http://files.builder.misssite.com/67/bd/67bd64b0-ac82-4204-893f-fd436f1f605a.jpeg');
         console.log(ret.data.text);
         await worker.terminate();
-      })();
+      })();*/
 }
