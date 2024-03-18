@@ -1,2 +1,2 @@
-# Nykopings mat
+# Nyköpings mat
  Hitta en restaurang nära dig
