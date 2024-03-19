@@ -6,10 +6,10 @@ if(params.has('restaurang')) {
     window.location.href = '/meny';
 }
 
-let restaurang = params.get('restaurang');
+let restaurang = params.get('restaurang').toLowerCase();
 
 //Set logo and location
-switch(params.get('restaurang')) {
+switch(params.get('restaurang').toLowerCase()) {
     case 'at':
         document.getElementById('restaurang-icon').src = 'src/assets/at-logga.png'
         document.getElementById('location-button').href = 'https://www.google.com/maps/place/Restaurang+%C3%A4t./@58.7517052,17.0034565,17.54z/data=!4m6!3m5!1s0x465f2d6d8a1f5749:0xeccb616bb5be87e0!8m2!3d58.7516791!4d17.0045203!16s%2Fg%2F11hzsvtp19?entry=ttu';
@@ -32,7 +32,7 @@ console.log(hour);
 const timeOfDay = hour >= 16 ? 'dinner' : 'lunch';
 console.log(timeOfDay);
 
-
+const currDay = time.getDay();
 
 /*fetch('../assets/json/mat.json')
   .then(res => res.json())
@@ -164,7 +164,17 @@ if(restaurang == 'hemkop') {
         document.body.appendChild(code.querySelector('.lunch-wrapper h2'));
         const flexDiv = document.createElement('div');
         flexDiv.classList.add('flex-container');
+
+        //Highlight current day
+        if(currDay <= 3) {
+          code.querySelector(`.lunch-wrapper .left p:nth-child(${currDay*2})`).id = 'current-day';
+        } else if(currDay <= 5) {
+          code.querySelector(`.lunch-wrapper .right p:nth-child(${currDay*2})`).id = 'current-day';
+        }
+
         flexDiv.appendChild(code.querySelector('.lunch-wrapper'))
+
+
         document.body.appendChild(flexDiv);
       })
 } else if(restaurang == 'nsu') {
@@ -195,7 +205,7 @@ if(restaurang == 'hemkop') {
       let secondPart = false;
       menuPart.firstChild.classList.add('nsu-week')
       document.body.appendChild(menuPart.childNodes[0])
-      for(i = 0; i < menuPart.childNodes.length; i++) {
+      for(i = 0; i < menuPart.childNodes.length-1; i++) {
         if(menuPart.childNodes[i].innerHTML.startsWith('<em>')) {
         }
         console.log(menuPart.childNodes[i].childNodes);
@@ -206,6 +216,7 @@ if(restaurang == 'hemkop') {
               if(latestDayInt == 3) secondPart = true;
               latestDayInt++;
               latestDay = menuPart.childNodes[0];
+              if(latestDayInt == currDay) latestDay.id = 'current-day';
               if(!secondPart) {
                 leftDiv.appendChild(menuPart.childNodes[0]);
               } else {

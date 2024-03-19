@@ -64,7 +64,7 @@ body {
     margin-left: 8px;
 }
 
-/*Ät.*/
+/*Ät. och nsu*/
 .lunch-wrapper {
     margin-top: 20px;
     display: flex;
@@ -72,9 +72,22 @@ body {
 
 .lunch-wrapper > .lunch-block > h4 {
     margin-left: 8px;
+    margin-right: 8px;
     border-bottom: 2px solid black;
     padding-bottom: 2px;
     display: inline;
+}
+
+.lunch-wrapper > .lunch-block > p > strong {
+    margin-left: 8px;
+    margin-right: 8px;
+    border-bottom: 2px solid black;
+    padding-bottom: 2px;
+    display: inline;
+}
+
+.lunch-wrapper > .lunch-block > p {
+    padding-left: 8px;
 }
 
 .week-h2 {
@@ -95,9 +108,15 @@ body {
 .lunch-block > p {
     border: 2px solid black;
     min-height: 100px;
-    margin-left: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .lunch-block .right > p {
     border-left: none;
+}
+
+#current-day {
+    border-color: rgb(0, 255, 64);
+    box-shadow: 0 0 15px 5px rgb(0, 255, 64);
 }
