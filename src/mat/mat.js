@@ -1,9 +1,9 @@
 const params = new URLSearchParams(window.location.search)
 if(params.has('restaurang')) {
-    const restaurang = params.get('restaurang');
-    if(restaurang != 'at' && restaurang != 'hemkop' && restaurang != 'nsu') window.location.href = '/home';
+    const restaurang = params.get('restaurang').toLowerCase();
+    if(restaurang != 'at' && restaurang != 'hemkop' && restaurang != 'nsu') window.location.href = '/meny';
 } else {
-    window.location.href = '/home';
+    window.location.href = '/meny';
 }
 
 let restaurang = params.get('restaurang');
@@ -78,6 +78,47 @@ console.log(timeOfDay);
     return score/len;
    }
 
+   function editDistance(s1, s2) {
+    s1 = s1.toLowerCase();
+    s2 = s2.toLowerCase();
+  
+    var costs = new Array();
+    for (var i = 0; i <= s1.length; i++) {
+      var lastValue = i;
+      for (var j = 0; j <= s2.length; j++) {
+        if (i == 0)
+          costs[j] = j;
+        else {
+          if (j > 0) {
+            var newValue = costs[j - 1];
+            if (s1.charAt(i - 1) != s2.charAt(j - 1))
+              newValue = Math.min(Math.min(newValue, lastValue),
+                costs[j]) + 1;
+            costs[j - 1] = lastValue;
+            lastValue = newValue;
+          }
+        }
+      }
+      if (i > 0)
+        costs[s2.length] = lastValue;
+    }
+    return costs[s2.length];
+  }
+
+  function similarity(s1, s2) {
+    var longer = s1;
+    var shorter = s2;
+    if (s1.length < s2.length) {
+      longer = s2;
+      shorter = s1;
+    }
+    var longerLength = longer.length;
+    if (longerLength == 0) {
+      return 1.0;
+    }
+    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+  }
+
 if(restaurang == 'hemkop') {
     
     fetch('https://corsproxy.io/?' + encodeURIComponent('http://spelhagenscatering.se'))
@@ -94,14 +135,14 @@ if(restaurang == 'hemkop') {
         const text = ret.data.text.split(" ");
         console.log(text);
         text.forEach(word=>{
-          const veckodagar = ["måndag","tisdag","onsdag","torsdag","fredag","lördag","söndag"]
+          let veckodagar = ["måndag","tisdag","onsdag","torsdag","fredag"]
           //if(veckodagar.includes(word)) console.log(word, x)
-          /*veckodagar.map(x=>{
-            if(matchWords(word, x) > 0.4) {
-            }
-            console.log(word);
-          })*/
-        })
+          veckodagar.map(x=>{
+            if(similarity(x, word) > 0.4){
+              console.log(x, word);
+            }}
+            //console.log(similarity(word, x), word, x);
+            )})
         //Skapa objekt
 
         await worker.terminate();
@@ -142,7 +183,7 @@ if(restaurang == 'hemkop') {
       }
       menuPart.querySelector('p:first-child').remove();
       menuPart.querySelector('p:first-child').classList.add('week-h2');
-      console.log(menuPart);
+
       menuPart.classList.add('lunch-wrapper')
       const leftDiv = document.createElement('div');
       const rightDiv = document.createElement('div');
@@ -150,20 +191,34 @@ if(restaurang == 'hemkop') {
       rightDiv.classList.add('lunch-block');
       leftDiv.classList.add('right');
       rightDiv.classList.add('left');
-      
+
       let secondPart = false;
-      menuPart.childNodes.forEach(p=> {
-        if(p.innerHTML == '<strong>Torsdag</strong>') secondPart = true;
-        if(!secondPart) {
-          leftDiv.appendChild(p);
-          menuPart.removeChild(p);
-          menuPart.child
-        } else if(secondPart) {
-          rightDiv.appendChild(p);
+      menuPart.firstChild.classList.add('nsu-week')
+      document.body.appendChild(menuPart.childNodes[0])
+      for(i = 0; i < menuPart.childNodes.length; i++) {
+        if(menuPart.childNodes[i].innerHTML.startsWith('<em>')) {
         }
-      })
+        console.log(menuPart.childNodes[i].childNodes);
+          let latestDay = null;
+          let latestDayInt = 0;
+          while (menuPart.childNodes.length > 1) {
+            if(menuPart.childNodes[0].innerHTML.startsWith('<strong>')) {
+              if(latestDayInt == 3) secondPart = true;
+              latestDayInt++;
+              latestDay = menuPart.childNodes[0];
+              if(!secondPart) {
+                leftDiv.appendChild(menuPart.childNodes[0]);
+              } else {
+                rightDiv.appendChild(menuPart.childNodes[0]);
+              }
+            } else {
+              latestDay.appendChild(menuPart.childNodes[0]);
+            }
+            
+          }
       menuPart.appendChild(leftDiv);
       menuPart.appendChild(rightDiv);
+      menuPart.querySelector('p:first-child').remove();
       document.body.appendChild(menuPart);
-    })
+    }})
 }
