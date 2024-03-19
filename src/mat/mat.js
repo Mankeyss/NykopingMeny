@@ -163,7 +163,11 @@ if(restaurang == 'hemkop') {
         code.querySelector('.lunch-wrapper h2').classList.add('week-h2');
         document.body.appendChild(code.querySelector('.lunch-wrapper h2'));
         const flexDiv = document.createElement('div');
+
+        
+
         flexDiv.classList.add('flex-container');
+
 
         //Highlight current day
         if(currDay <= 3) {
@@ -171,6 +175,13 @@ if(restaurang == 'hemkop') {
         } else if(currDay <= 5) {
           code.querySelector(`.lunch-wrapper .right p:nth-child(${currDay*2})`).id = 'current-day';
         }
+
+        /*for(i = 1; i < 3; i++) {
+          code.querySelector(`.left p:nth-child(1)`).prepend(code.querySelector(`.left h4:nth-child(1)`))
+        }*/
+
+        code.querySelector('.right p').prepend(code.querySelector('.right h4'))
+
 
         flexDiv.appendChild(code.querySelector('.lunch-wrapper'))
 
