@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    overflow-x: visible;
 }
 
 .restaurang-information {
@@ -22,6 +23,19 @@ body {
     margin-left: 8px;
     margin-top: 60px;
     border: 2px solid black;
+    user-select: none;
+}
+
+.restaurang-location {
+    margin-bottom: 50px;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    visibility: visible;
+}
+
+#location-button {
+    visibility: hidden;
 }
 
 .rätter-container {
@@ -48,4 +62,32 @@ body {
 .item-name,
 .item-price {
     margin-left: 8px;
+}
+
+/*Ät.*/
+.lunch-wrapper {
+    margin-top: 20px;
+    display: flex;
+}
+
+.lunch-wrapper > .lunch-block > h4 {
+    margin-left: 8px;
+    border-bottom: 2px solid black;
+    padding-bottom: 2px;
+    display: inline;
+}
+
+.week-h2 {
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+.lunch-block > p {
+    border: 2px solid black;
+    min-height: 100px;
+    margin-left: 20px;
+}
+
+.lunch-block .right > p {
+    border-left: none;
 }
