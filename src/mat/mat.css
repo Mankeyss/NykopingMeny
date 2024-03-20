@@ -1,13 +1,13 @@
 body {
     margin: 0;
     padding: 0;
-    overflow-x: visible;
+    overflow-x: hidden;
 }
 
 .restaurang-information {
     width: 100vw;
     height: 180px;
-    background-color: rgb(25, 183, 25);
+    background-color: rgb(184, 184, 184);
 }
 
 .restaurang-icon {
@@ -24,19 +24,11 @@ body {
     margin-top: 60px;
     border: 2px solid black;
     user-select: none;
+    position: absolute;
+    top:10px;
+    box-shadow: 0px 0px 15px 10px white;
 }
 
-.restaurang-location {
-    margin-bottom: 50px;
-    cursor: pointer;
-    height: 40px;
-    width: 40px;
-    visibility: visible;
-}
-
-#location-button {
-    visibility: hidden;
-}
 
 .rätter-container {
     display: flex;
@@ -119,4 +111,13 @@ body {
 #current-day {
     border-color: rgb(0, 255, 64);
     box-shadow: 0 0 15px 5px rgb(0, 255, 64);
+}
+
+/*Hemköp*/
+.hemkop-lunch-wrapper {
+    margin-top: 40px;
+}
+
+.lunch-block {
+    width: 50vw;
 }

@@ -12,25 +12,29 @@ let restaurang = params.get('restaurang').toLowerCase();
 switch(params.get('restaurang').toLowerCase()) {
     case 'at':
         document.getElementById('restaurang-icon').src = 'src/assets/at-logga.png'
-        document.getElementById('location-button').href = 'https://www.google.com/maps/place/Restaurang+%C3%A4t./@58.7517052,17.0034565,17.54z/data=!4m6!3m5!1s0x465f2d6d8a1f5749:0xeccb616bb5be87e0!8m2!3d58.7516791!4d17.0045203!16s%2Fg%2F11hzsvtp19?entry=ttu';
+        document.getElementById('hemkop-gmap').remove();
+        document.getElementById('nsu-gmap').remove();
         break;
     case 'hemkop':
         document.getElementById('restaurang-icon').src = 'src/assets/hemköp-logga.png'
-        document.getElementById('location-button').href = 'https://www.google.com/maps/place/Hemk%C3%B6p+Spelhagen/@58.7454867,17.0043087,17z/data=!3m1!4b1!4m6!3m5!1s0x465f2d6895555555:0x2fac3c6ad13d38d9!8m2!3d58.7454867!4d17.0068836!16s%2Fg%2F1q6295007?entry=ttu';
+        document.getElementById('at-gmap').remove();
+        document.getElementById('nsu-gmap').remove();
         break;
     case 'nsu':
         document.getElementById('restaurang-icon').src = 'src/assets/NSU-logga.png'
-        document.getElementById('location-button').href = 'https://www.google.se/maps/place/Nyk%C3%B6ping+Strand+Utbildningscentrum+AB/@58.7450334,17.0126474,18z/data=!4m6!3m5!1s0x465f2d65ff5e94dd:0xdbc3c5a40d5b0d7b!8m2!3d58.7450266!4d17.0127049!16s%2Fg%2F1hc6xjvk5?entry=ttu';
+        document.getElementById('at-gmap').remove();
+        document.getElementById('hemkop-gmap').remove();
         break;
 }
+
+//Remove from gmaps
+document.querySelector('.restaurang-information .mapouter .gmap_canvas a').remove();
 
 //Retrieve time
 let time = new Date();
 
 const hour = time.getHours()
-console.log(hour);
-const timeOfDay = hour >= 16 ? 'dinner' : 'lunch';
-console.log(timeOfDay);
+//const timeOfDay = hour >= 16 ? 'dinner' : 'lunch';
 
 const currDay = time.getDay();
 
@@ -119,6 +123,15 @@ const currDay = time.getDay();
     return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
   }
 
+  function processText(inputText) {
+    for(i = 0; i < inputText.length; i++) {
+      if(Number(inputText[i]) !== null) {
+        return inputText.split(inputText[i]);
+      }
+    }
+    return inputText;
+}
+
 if(restaurang == 'hemkop') {
     
     fetch('https://corsproxy.io/?' + encodeURIComponent('http://spelhagenscatering.se'))
@@ -128,29 +141,54 @@ if(restaurang == 'hemkop') {
         const code = document.createElement('html');
         code.innerHTML = result;
 
+
         //Read image
       (async () => {
         const worker = await Tesseract.createWorker('swe');
         const ret = await worker.recognize(code.querySelector("#page-zones__main .bk-image.imagewidget figure a").href);
-        const text = ret.data.text.split(" ");
-        console.log(text);
-        text.forEach(word=>{
-          let veckodagar = ["måndag","tisdag","onsdag","torsdag","fredag"]
-          //if(veckodagar.includes(word)) console.log(word, x)
-          veckodagar.map(x=>{
-            if(similarity(x, word) > 0.4){
-              console.log(x, word);
-            }}
-            //console.log(similarity(word, x), word, x);
-            )})
-        //Skapa objekt
+        let text = ret.data.text.split("dag").splice(1);
+        text[text.length-1] = text[text.length-1].slice(0, -110);
+
+        text = text.map(x=>x=x.slice(0, -4));
+        
+        
+        console.log(ret.data.text);
+
+        const lunchWrapper = document.createElement('div');
+        lunchWrapper.classList.add('lunch-wrapper');
+        lunchWrapper.classList.add('hemkop-lunch-wrapper');
+
+        const lunchBlockLeft = document.createElement('div');
+        lunchBlockLeft.classList.add("lunch-block");
+        lunchBlockLeft.classList.add("left");
+
+        const lunchBlockRight = document.createElement('div');
+        lunchBlockRight.classList.add("lunch-block");
+        lunchBlockRight.classList.add("right");
+
+        for(i = 0; i < text.length; i++) {
+          let dagar = ["MÅNDAG","TISDAG","ONSDAG","TORSDAG","FREDAG"];
+          const lunchBlockPName = document.createElement('p');
+          lunchBlockPName.innerHTML = `<strong>${dagar[i]}</strong><p>${text[i]}</p>`;
+          if(i == currDay-1) lunchBlockPName.id = 'current-day';
+          if(i <= 2) {
+            lunchBlockLeft.appendChild(lunchBlockPName);
+          } else {
+            lunchBlockRight.appendChild(lunchBlockPName);
+          }
+        };
+
+
+        lunchWrapper.appendChild(lunchBlockLeft);
+        lunchWrapper.appendChild(lunchBlockRight);
+
+        document.body.appendChild(lunchWrapper);
+
+//https://prao.8m.se/instructions.html
 
         await worker.terminate();
-      })();
-      })
-      .catch((error) => console.error(error));
-
-    
+      })()}).catch((error) => console.error(error));
+         
 } else if(restaurang == 'at') {
   fetch('https://cors.sizable.workers.dev/https://www.restaurang.at/')
       .then((response) => response.text())
