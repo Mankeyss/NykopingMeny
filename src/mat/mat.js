@@ -82,7 +82,30 @@ const currDay = time.getDay();
     return inputText;
 }
 
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
 if(restaurang == 'hemkop') {
+
+  const lunchWrapper = document.createElement('div');
+  lunchWrapper.classList.add('lunch-wrapper');
+  lunchWrapper.classList.add('hemkop-lunch-wrapper');
+
+  //Få data snabbare
+  /*fetch('https://cors.sizable.workers.dev/https://prao.8m.se/hemkop.html')
+  .then((response) => response.text())
+  .then((result) => {
+    console.log(result);
+    const information = document.createElement('div');
+    information.innerHTML = result;
+    lunchWrapper.innerHTML = information.innerHTML;
+    document.body.appendChild(lunchWrapper);
+  })
+  .catch((error)=>console.error('Error: ' + error));*/
     
     fetch('https://corsproxy.io/?' + encodeURIComponent('http://spelhagenscatering.se'))
       .then((response) => response.text())
@@ -102,11 +125,9 @@ if(restaurang == 'hemkop') {
         text = text.map(x=>x=x.slice(0, -4));
         
         
-        console.log(ret.data.text);
+        console.log(text);
 
-        const lunchWrapper = document.createElement('div');
-        lunchWrapper.classList.add('lunch-wrapper');
-        lunchWrapper.classList.add('hemkop-lunch-wrapper');
+        setCookie('hemkop', JSON.stringify(text), 2)
 
         const lunchBlockLeft = document.createElement('div');
         lunchBlockLeft.classList.add("lunch-block");
@@ -115,6 +136,8 @@ if(restaurang == 'hemkop') {
         const lunchBlockRight = document.createElement('div');
         lunchBlockRight.classList.add("lunch-block");
         lunchBlockRight.classList.add("right");
+
+
 
         for(i = 0; i < text.length; i++) {
           let dagar = ["MÅNDAG","TISDAG","ONSDAG","TORSDAG","FREDAG"];
@@ -128,11 +151,27 @@ if(restaurang == 'hemkop') {
           }
         };
 
+        
 
         lunchWrapper.appendChild(lunchBlockLeft);
         lunchWrapper.appendChild(lunchBlockRight);
 
         document.body.appendChild(lunchWrapper);
+
+        //let jsonData = {"Brand":"hemkop","Luncher":[document.querySelector('.lunch-wrapper').innerHTML]}
+
+
+        /*const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${document.body.querySelector('.lunch-wrapper').outerHTML}` + '</body></html>'], 'hemkop.html', {
+          type: 'text/html'
+        })
+
+        data.text = document.body.querySelector('.lunch-wrapper').outerHTML;
+
+        fetch('https://cors.sizable.workers.dev/https://prao.8m.se/hemkop.html', {"method":"post","body":data})
+        .then((response) => response.text())
+        .then((result) => console.log(result));*/
+          
+          
 
 //https://prao.8m.se/instructions.html
 
