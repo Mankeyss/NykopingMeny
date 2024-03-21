@@ -40,13 +40,13 @@ function changePos(id) {
     setTimeout(function(){
         switch (id) {
             case 'at-nav-bar-button':
-                window.location = '?restaurang=at';
+                window.location = '/?restaurang=at';
                 break;
             case 'hemkop-nav-bar-button':
-                window.location = '?restaurang=hemkop';
+                window.location = '/?restaurang=hemkop';
                 break;
             case 'nsu-nav-bar-button':
-                window.location = '?restaurang=nsu';
+                window.location = '/?restaurang=nsu';
                 break;
         }
     },200)
