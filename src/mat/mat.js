@@ -1,9 +1,9 @@
 const params = new URLSearchParams(window.location.search)
 if(params.has('restaurang')) {
     const restaurang = params.get('restaurang').toLowerCase();
-    if(restaurang != 'at' && restaurang != 'hemkop' && restaurang != 'nsu') window.location.href = '/meny';
+    if(restaurang != 'at' && restaurang != 'hemkop' && restaurang != 'nsu') window.location.href = '?restaurang=at';
 } else {
-    window.location.href = '/meny';
+    window.location.href = '?restaurang=at';
 }
 
 function removeLoadingScreen() {
