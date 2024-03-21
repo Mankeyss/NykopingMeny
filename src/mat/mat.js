@@ -10,7 +10,12 @@ function removeLoadingScreen() {
   if(document.getElementById('loading-screen') !== null) document.getElementById('loading-screen').remove();
 }
 
-let restaurang = params.get('restaurang').toLowerCase();
+let restaurang;
+if(params.has('restaurang')) {
+  restaurang = params.get('restaurang').toLowerCase();
+} else {
+  restaurang = 'at';
+}
 
 //Set logo and location
 switch(params.get('restaurang').toLowerCase()) {
