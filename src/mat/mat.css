@@ -14,9 +14,10 @@ body {
 
 .nav-bar-button {
     cursor: pointer;
-    user-select: none;
     padding-left: 10px;
     padding-right: 10px;
+    color: black;
+    text-decoration: none;
 }
 
 .nsu-nav-bar-button {
@@ -153,7 +154,7 @@ body {
 
 /*Hemköp*/
 .hemkop-lunch-wrapper {
-    margin-top: 40px;
+    margin-top: 60px;
 }
 
 .lunch-block {

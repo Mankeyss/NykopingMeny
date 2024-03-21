@@ -11,17 +11,20 @@ let restaurang = params.get('restaurang').toLowerCase();
 //Set logo and location
 switch(params.get('restaurang').toLowerCase()) {
     case 'at':
-        document.getElementById('restaurang-icon').src = 'src/assets/at-logga.png'
+        document.getElementById('restaurang-icon').src = 'src/assets/at-logga.png';
+        document.title = 'Ät.';
         document.getElementById('hemkop-gmap').remove();
         document.getElementById('nsu-gmap').remove();
         break;
     case 'hemkop':
-        document.getElementById('restaurang-icon').src = 'src/assets/hemköp-logga.png'
+        document.getElementById('restaurang-icon').src = 'src/assets/hemköp-logga.png';
+        document.title = 'Hemköp';
         document.getElementById('at-gmap').remove();
         document.getElementById('nsu-gmap').remove();
         break;
     case 'nsu':
-        document.getElementById('restaurang-icon').src = 'src/assets/NSU-logga.png'
+        document.getElementById('restaurang-icon').src = 'src/assets/NSU-logga.png';
+        document.title = 'Restaurang skolan';
         document.getElementById('at-gmap').remove();
         document.getElementById('hemkop-gmap').remove();
         break;
@@ -84,7 +87,7 @@ const currDay = time.getDay();
 
 function setCookie(cname, cvalue) {
   const d = new Date();
-  d.setTime(d.getTime() + ((7-d.getDay())*24*60*60*1000));
+  d.setTime(d.getTime() + (8-d.getDay())*24*60*60*1000-d.getHours()*60*60*1000);
   let expires = "expires="+ d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
@@ -138,8 +141,6 @@ if(restaurang == 'hemkop') {
       }
     };
 
-    
-
     lunchWrapper.appendChild(lunchBlockLeft);
     lunchWrapper.appendChild(lunchBlockRight);
 
@@ -172,11 +173,30 @@ if(restaurang == 'hemkop') {
       (async () => {
         const worker = await Tesseract.createWorker('swe');
         const ret = await worker.recognize(code.querySelector("#page-zones__main .bk-image.imagewidget figure a").href);
-        let info = ret.data.text.split("dag").splice(1);
+        let info = ret.data.text.split("\n").splice(3);
         info[info.length-1] = info[info.length-1].slice(0, -110);
 
-        info = info.map(x=>x=x.slice(0, -4));
+        //info = info.map(x=>x=x.slice(0, -4));
+
+        console.log(ret.data.text.split("\n"));
         
+        for(i = 0; i < info.length-1; i++) {
+          if(info[i+1]) {
+            info[i+1] += "<br>" + info[i].slice((i != 1 ? 4 : 7));
+            info.splice(i, 1);
+          } 
+        }
+
+        for(i = 0; i < 6; i++) {
+          info.splice(info.length-1, 1);
+        }
+        
+        info[0] = info[0].slice(5);
+        info[2] = info[2].slice(7);
+        info[3] = info[3].slice(8);
+        info[4] = info[4].slice(7);
+
+        console.log(info);
         
         //console.log(text);
 
@@ -281,7 +301,6 @@ if(restaurang == 'hemkop') {
       for(i = 0; i < menuPart.childNodes.length-1; i++) {
         if(menuPart.childNodes[i].innerHTML.startsWith('<em>')) {
         }
-        console.log(menuPart.childNodes[i].childNodes);
           let latestDay = null;
           let latestDayInt = 0;
           while (menuPart.childNodes.length > 1) {
