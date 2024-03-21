@@ -82,18 +82,71 @@ const currDay = time.getDay();
     return inputText;
 }
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue) {
   const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  d.setTime(d.getTime() + ((7-d.getDay())*24*60*60*1000));
   let expires = "expires="+ d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 if(restaurang == 'hemkop') {
+
+  let hasData = false;
 
   const lunchWrapper = document.createElement('div');
   lunchWrapper.classList.add('lunch-wrapper');
   lunchWrapper.classList.add('hemkop-lunch-wrapper');
+
+  if(getCookie('hemkop').length > 0) {
+    let text = JSON.parse(getCookie('hemkop'));
+    hasData = true;
+    const lunchBlockLeft = document.createElement('div');
+    lunchBlockLeft.classList.add("lunch-block");
+    lunchBlockLeft.classList.add("left");
+
+    const lunchBlockRight = document.createElement('div');
+    lunchBlockRight.classList.add("lunch-block");
+    lunchBlockRight.classList.add("right");
+
+
+
+    for(i = 0; i < text.length; i++) {
+      let dagar = ["MÅNDAG","TISDAG","ONSDAG","TORSDAG","FREDAG"];
+      const lunchBlockPName = document.createElement('p');
+      lunchBlockPName.innerHTML = `<strong>${dagar[i]}</strong><p>${text[i]}</p>`;
+      if(i == currDay-1) lunchBlockPName.id = 'current-day';
+      if(i <= 2) {
+        lunchBlockLeft.appendChild(lunchBlockPName);
+      } else {
+        lunchBlockRight.appendChild(lunchBlockPName);
+      }
+    };
+
+    
+
+    lunchWrapper.appendChild(lunchBlockLeft);
+    lunchWrapper.appendChild(lunchBlockRight);
+
+    document.body.appendChild(lunchWrapper);
+  }
+
+        
 
   //Få data snabbare
   /*fetch('https://cors.sizable.workers.dev/https://prao.8m.se/hemkop.html')
@@ -119,44 +172,21 @@ if(restaurang == 'hemkop') {
       (async () => {
         const worker = await Tesseract.createWorker('swe');
         const ret = await worker.recognize(code.querySelector("#page-zones__main .bk-image.imagewidget figure a").href);
-        let text = ret.data.text.split("dag").splice(1);
-        text[text.length-1] = text[text.length-1].slice(0, -110);
+        let info = ret.data.text.split("dag").splice(1);
+        info[info.length-1] = info[info.length-1].slice(0, -110);
 
-        text = text.map(x=>x=x.slice(0, -4));
+        info = info.map(x=>x=x.slice(0, -4));
         
         
-        console.log(text);
+        //console.log(text);
 
-        setCookie('hemkop', JSON.stringify(text), 2)
+        //Save data
+        setCookie('imgurl', code.querySelector("#page-zones__main .bk-image.imagewidget figure a").href)
+        if(!hasData || (hasData && getCookie('hemkop') != code.querySelector("#page-zones__main .bk-image.imagewidget figure a").href)) setCookie('hemkop', JSON.stringify(info));
 
-        const lunchBlockLeft = document.createElement('div');
-        lunchBlockLeft.classList.add("lunch-block");
-        lunchBlockLeft.classList.add("left");
-
-        const lunchBlockRight = document.createElement('div');
-        lunchBlockRight.classList.add("lunch-block");
-        lunchBlockRight.classList.add("right");
-
-
-
-        for(i = 0; i < text.length; i++) {
-          let dagar = ["MÅNDAG","TISDAG","ONSDAG","TORSDAG","FREDAG"];
-          const lunchBlockPName = document.createElement('p');
-          lunchBlockPName.innerHTML = `<strong>${dagar[i]}</strong><p>${text[i]}</p>`;
-          if(i == currDay-1) lunchBlockPName.id = 'current-day';
-          if(i <= 2) {
-            lunchBlockLeft.appendChild(lunchBlockPName);
-          } else {
-            lunchBlockRight.appendChild(lunchBlockPName);
-          }
-        };
+        if(!hasData) window.location.reload();
 
         
-
-        lunchWrapper.appendChild(lunchBlockLeft);
-        lunchWrapper.appendChild(lunchBlockRight);
-
-        document.body.appendChild(lunchWrapper);
 
         //let jsonData = {"Brand":"hemkop","Luncher":[document.querySelector('.lunch-wrapper').innerHTML]}
 
@@ -189,6 +219,7 @@ if(restaurang == 'hemkop') {
         code.querySelector('.woocommerce-add-lunches').remove();
         code.querySelector('.lunch-wrapper h2').classList.add('week-h2');
         document.body.appendChild(code.querySelector('.lunch-wrapper h2'));
+        code.querySelector('.lunch-wrapper').classList.add('at-wrapper');
         const flexDiv = document.createElement('div');
 
         
@@ -200,18 +231,22 @@ if(restaurang == 'hemkop') {
         if(currDay <= 3) {
           code.querySelector(`.lunch-wrapper .left p:nth-child(${currDay*2})`).id = 'current-day';
         } else if(currDay <= 5) {
-          code.querySelector(`.lunch-wrapper .right p:nth-child(${currDay*2})`).id = 'current-day';
+          code.querySelector(`.lunch-wrapper .right p:nth-child(${(currDay-3)*2})`).id = 'current-day';
         }
 
         /*for(i = 1; i < 3; i++) {
           code.querySelector(`.left p:nth-child(1)`).prepend(code.querySelector(`.left h4:nth-child(1)`))
         }*/
 
-        code.querySelector('.right p').prepend(code.querySelector('.right h4'))
+        code.querySelector('.left p').prepend(code.querySelector('.left h4'))
+        code.querySelector('.left p:nth-child(3)').prepend(code.querySelector('.left h4:nth-child(2)'));
+        code.querySelector('.left p:nth-child(4)').prepend(code.querySelector('.left h4:nth-child(3)'));
 
+        code.querySelector('.right p').prepend(code.querySelector('.right h4'))
+        code.querySelector('.right p:nth-child(3)').prepend(code.querySelector('.right h4:nth-child(2)'));
+        code.querySelector('.right p:nth-child(4)').prepend(code.querySelector('.right h4:nth-child(3)'));
 
         flexDiv.appendChild(code.querySelector('.lunch-wrapper'))
-
 
         document.body.appendChild(flexDiv);
       })

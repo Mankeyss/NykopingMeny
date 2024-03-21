@@ -4,6 +4,36 @@ body {
     overflow-x: hidden;
 }
 
+.nav-bar {
+    width: 100vw;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.nav-bar-button {
+    cursor: pointer;
+    user-select: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.nsu-nav-bar-button {
+    padding-right: 20px;
+}
+
+.nav-bar-line {
+    height: 6px;
+    margin-top: -5px;
+    margin-bottom: 5px;
+    background-color: rgb(0, 0, 0);
+    width: 50px;
+    box-shadow: 0px -5px 0 rgba(0, 0, 0, 0);
+    border-radius: 15px;
+    transition: margin-left 0.2s ease, width 0.2s ease;
+}
+
 .restaurang-information {
     width: 100vw;
     height: 180px;
@@ -25,7 +55,7 @@ body {
     border: 2px solid black;
     user-select: none;
     position: absolute;
-    top:10px;
+    top:60px;
     box-shadow: 0px 0px 15px 10px white;
 }
 
@@ -75,11 +105,19 @@ body {
     margin-right: 8px;
     border-bottom: 2px solid black;
     padding-bottom: 2px;
-    display: inline;
+    display: block;
 }
 
 .lunch-wrapper > .lunch-block > p {
     padding-left: 8px;
+}
+
+.at-wrapper > .lunch-block > p > h4 {
+    margin-top: 0;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-bottom: 2px solid black;
+    padding-bottom: 2px;
 }
 
 .week-h2 {
