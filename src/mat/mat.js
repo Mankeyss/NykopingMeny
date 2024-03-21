@@ -7,7 +7,12 @@ if(params.has('restaurang')) {
 }
 
 function removeLoadingScreen() {
-  if(document.getElementById('loading-screen') !== null) document.getElementById('loading-screen').remove();
+  if(document.getElementById('loading-screen') !== null) {
+    document.getElementById('loading-screen').classList.add('loading-screen-invis');
+    setTimeout(function() {
+      document.getElementById('loading-screen').remove();
+    },400)
+  } 
 }
 
 let restaurang;

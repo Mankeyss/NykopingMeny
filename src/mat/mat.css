@@ -15,7 +15,23 @@ body {
     height: 120vh;
     z-index: 10;
     background-color: rgb(160, 160, 160);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: opacity 0.2s ease;
 }
+
+.loading-screen-invis {
+    opacity: 0;
+}
+
+.loading-screen > p {
+    color: white;
+    font-size: 32px;
+    margin: 0;
+}
+
 
 .nav-bar {
     width: 100vw;

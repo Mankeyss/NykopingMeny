@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meny</title>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+    <link rel="stylesheet" href="src/loader.css">
     <link rel="stylesheet" href="src/font.css">
     <link rel="stylesheet" href="src/mat/mat.css">
     <!--<script type="text/javascript" src="src/assets/json/mat.json"></script>-->
@@ -13,7 +14,10 @@
     <script src="src/mat/refresh.js" defer></script>
 </head>
 <body>
-    <div class="loading-screen" id="loading-screen"></div>
+    <div class="loading-screen" id="loading-screen">
+        <p>Hämtar meny</p>
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+    </div>
     <div class="nav-bar">
         <p class="nav-bar-button" id="at-nav-bar-button">Ät.</p>
         <p class="nav-bar-button" id="hemkop-nav-bar-button" target="_blank">Hemköp</p>
