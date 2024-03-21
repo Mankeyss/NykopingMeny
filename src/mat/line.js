@@ -37,5 +37,21 @@ function changePos(id) {
     document.getElementById('nav-bar-line').style.marginLeft = document.getElementById(id).offsetLeft - 2 + "px";
     document.getElementById('nav-bar-line').style.width = document.getElementById(id).clientWidth + 4 + "px";
 
-    window.location = '?restaurang=';
+    setTimeout(function(){
+        switch (id) {
+            case 'at-nav-bar-button':
+                window.location = '?restaurang=at';
+                break;
+            case 'hemkop-nav-bar-button':
+                window.location = '?restaurang=hemkop';
+                break;
+            case 'nsu-nav-bar-button':
+                window.location = '?restaurang=nsu';
+                break;
+        }
+    },200)
 }
+
+setTimeout(function(){
+    document.getElementById('nav-bar-line').classList.remove('invisible-line');
+},500);
