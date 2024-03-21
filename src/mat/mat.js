@@ -6,6 +6,10 @@ if(params.has('restaurang')) {
     window.location.href = '/meny';
 }
 
+function removeLoadingScreen() {
+  if(document.getElementById('loading-screen') !== null) document.getElementById('loading-screen').remove();
+}
+
 let restaurang = params.get('restaurang').toLowerCase();
 
 //Set logo and location
@@ -145,6 +149,7 @@ if(restaurang == 'hemkop') {
     lunchWrapper.appendChild(lunchBlockRight);
 
     document.body.appendChild(lunchWrapper);
+    removeLoadingScreen();
   }
 
         
@@ -174,11 +179,8 @@ if(restaurang == 'hemkop') {
         const worker = await Tesseract.createWorker('swe');
         const ret = await worker.recognize(code.querySelector("#page-zones__main .bk-image.imagewidget figure a").href);
         let info = ret.data.text.split("\n").splice(3);
-        info[info.length-1] = info[info.length-1].slice(0, -110);
 
         //info = info.map(x=>x=x.slice(0, -4));
-
-        console.log(ret.data.text.split("\n"));
         
         for(i = 0; i < info.length-1; i++) {
           if(info[i+1]) {
@@ -195,8 +197,6 @@ if(restaurang == 'hemkop') {
         info[2] = info[2].slice(7);
         info[3] = info[3].slice(8);
         info[4] = info[4].slice(7);
-
-        console.log(info);
         
         //console.log(text);
 
@@ -269,6 +269,7 @@ if(restaurang == 'hemkop') {
         flexDiv.appendChild(code.querySelector('.lunch-wrapper'))
 
         document.body.appendChild(flexDiv);
+        removeLoadingScreen();
       })
 } else if(restaurang == 'nsu') {
   fetch('https://cors.sizable.workers.dev/https://nsutbildning.se/restaurang/')
@@ -323,5 +324,6 @@ if(restaurang == 'hemkop') {
       menuPart.appendChild(rightDiv);
       menuPart.querySelector('p:first-child').remove();
       document.body.appendChild(menuPart);
+      removeLoadingScreen();
     }})
 }

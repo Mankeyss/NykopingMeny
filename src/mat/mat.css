@@ -1,7 +1,23 @@
 body {
     margin: 0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
     overflow-x: hidden;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.loading-screen {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100vw;
+    height: 120vh;
+    z-index: 10;
+    background-color: rgb(160, 160, 160);
 }
 
 .nav-bar {
