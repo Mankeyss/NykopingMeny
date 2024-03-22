@@ -9,9 +9,6 @@ function handleError() {
 //Retrieve foods
 if(day <= 4) {
     //Get html file
-    /*fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat.html', {"method":"post","body":data})
-    .then((response) => response.text())
-    .then((result) => console.log(result));*/
     (async function(){
         let info = [];
         await fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-at.html', {"method":"get"})
@@ -62,7 +59,6 @@ if(day <= 4) {
         } else {
             nsuCode.innerHTML = nsuCode.querySelector(`div p:nth-child(${(day*4)+3})`).innerHTML;
         }
-        console.log(nsuCode.innerHTML);
         
         const nsuParagraph = document.createElement('p');
         nsuParagraph.innerHTML = `<strong>Restaurang Skolan</strong>`;

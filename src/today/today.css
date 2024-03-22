@@ -27,3 +27,15 @@ body {
     font-size: 18px;
     border-bottom: 1px solid black;
 }
+
+.nav-bar {
+    font-size: 18px;
+    color: rgb(50, 50, 50);
+    background-color: rgb(202, 202, 202);
+}
+
+.nav-bar > a {
+    text-decoration: none;
+    margin: 0;
+    color: black;
+}

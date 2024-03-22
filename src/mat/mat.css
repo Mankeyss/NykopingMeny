@@ -45,12 +45,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
 }
 
 .nav-bar > a {
     color: black;
     text-decoration: none;
     margin-left: 10px;
+    white-space: nowrap;
 }
 
 .nav-bar-button {
@@ -59,6 +61,19 @@ body {
     padding-right: 10px;
     color: black;
     text-decoration: none;
+}
+
+.nav-bar-compact-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+.nav-bar-compact-div > a {
+    text-decoration: none;
+    color: black;
 }
 
 .nsu-nav-bar-button {
@@ -207,4 +222,10 @@ body {
 
 .lunch-block {
     width: 50vw;
+}
+
+@media screen and (max-width: 430px) {
+    .nav-bar-compact-div > a:nth-child(1) {
+        display: none;
+    }
 }
