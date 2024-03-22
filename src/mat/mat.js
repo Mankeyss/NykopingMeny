@@ -55,39 +55,6 @@ const hour = time.getHours()
 
 const currDay = time.getDay();
 
-/*fetch('../assets/json/mat.json')
-  .then(res => res.json())
-  .then(data => {
-    const menu = data[0]["menu"][timeOfDay];
-    //Create Item Displays
-    menu.forEach(item => {
-        //Create Item Div
-        const foodItem = document.createElement("div");
-        foodItem.classList.add('item');
-        document.getElementById('rätter').appendChild(foodItem);
-
-        //Create Food Image
-        const foodImage = document.createElement('img');
-        foodImage.src = '../assets/food/grilled-chicken.jpg';
-        foodImage.classList.add('item-img');
-        foodItem.appendChild(foodImage);
-
-        //Create Name Paragraph
-        const name = document.createElement('p');
-        const nameText = document.createTextNode(item["name"]);
-        name.appendChild(nameText)
-        name.classList.add('item-name');
-        foodItem.appendChild(name);
-        
-        //Create Price Paragraph
-        const price = document.createElement('p');
-        const priceText = document.createTextNode(item["price"]);
-        price.appendChild(priceText)
-        price.classList.add('item-price');
-        foodItem.appendChild(price);
-    });
-   });*/
-
    
 
   function processText(inputText) {
@@ -162,19 +129,7 @@ if(restaurang == 'hemkop') {
     removeLoadingScreen();
   }
 
-        
 
-  //Få data snabbare
-  /*fetch('https://cors.sizable.workers.dev/https://prao.8m.se/hemkop.html')
-  .then((response) => response.text())
-  .then((result) => {
-    console.log(result);
-    const information = document.createElement('div');
-    information.innerHTML = result;
-    lunchWrapper.innerHTML = information.innerHTML;
-    document.body.appendChild(lunchWrapper);
-  })
-  .catch((error)=>console.error('Error: ' + error));*/
     
     fetch('https://corsproxy.io/?' + encodeURIComponent('http://spelhagenscatering.se'))
       .then((response) => response.text())
@@ -208,6 +163,13 @@ if(restaurang == 'hemkop') {
         info[2] = info[2].slice(7);
         info[3] = info[3].slice(8);
         info[4] = info[4].slice(7);
+
+        const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${info.join("$$")}` + '</body></html>'], 'mat-hemkop.html', {
+          type: 'text/html'
+        })
+  
+        fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-hemkop.html', {"method":"post","body":data})
+        .catch((error) => console.error('Error: ' + error));
         
         //console.log(text);
 
@@ -217,20 +179,6 @@ if(restaurang == 'hemkop') {
 
         if(!hasData) window.location.reload();
 
-        
-
-        //let jsonData = {"Brand":"hemkop","Luncher":[document.querySelector('.lunch-wrapper').innerHTML]}
-
-
-        /*const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${document.body.querySelector('.lunch-wrapper').outerHTML}` + '</body></html>'], 'hemkop.html', {
-          type: 'text/html'
-        })
-
-        data.text = document.body.querySelector('.lunch-wrapper').outerHTML;
-
-        fetch('https://cors.sizable.workers.dev/https://prao.8m.se/hemkop.html', {"method":"post","body":data})
-        .then((response) => response.text())
-        .then((result) => console.log(result));*/
           
           
 
@@ -252,6 +200,13 @@ if(restaurang == 'hemkop') {
         document.body.appendChild(code.querySelector('.lunch-wrapper h2'));
         code.querySelector('.lunch-wrapper').classList.add('at-wrapper');
         const flexDiv = document.createElement('div');
+
+        const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${code.querySelector('.lunch-wrapper').outerHTML}` + '</body></html>'], 'mat-at.html', {
+          type: 'text/html'
+        })
+
+        fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-at.html', {"method":"post","body":data})
+        .catch((error) => console.error('Error: ' + error));
 
         //console.log(cookieData);
 
@@ -300,6 +255,13 @@ if(restaurang == 'hemkop') {
       }
       menuPart.querySelector('p:first-child').remove();
       menuPart.querySelector('p:first-child').classList.add('week-h2');
+
+      const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${menuPart.outerHTML}` + '</body></html>'], 'mat-nsu.html', {
+        type: 'text/html'
+      })
+
+      fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-nsu.html', {"method":"post","body":data})
+      .catch((error) => console.error('Error: ' + error));
 
       menuPart.classList.add('lunch-wrapper')
       const leftDiv = document.createElement('div');
