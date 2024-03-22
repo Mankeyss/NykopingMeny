@@ -3,7 +3,8 @@ const day = new Date().getDay()-1;
 document.getElementById('title-p').innerHTML = days[day];
 
 function handleError() {
-    //Give error message
+    //Handle error
+    window.location.href = "";
 }
 
 //Retrieve foods
