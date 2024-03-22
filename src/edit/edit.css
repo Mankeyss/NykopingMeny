@@ -1,0 +1,73 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+}
+
+.nav-bar {
+    width: 100vw;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(164, 164, 164);
+    margin-bottom: 20px;
+}
+
+.nav-bar > a {
+    color: black;
+    text-decoration: none;
+}
+
+.title-p {
+    text-align: center;
+    font-size: 24px;
+}
+
+#return-button {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.restaurang-container-nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.restaurang-container-nav-bar > p {
+    padding-right: 10px;
+    padding-left: 10px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.restaurang-container-nav-bar > .selected-p {
+    background-color: white;
+    border-radius: 5px;
+}
+
+textarea {
+    max-width: 200px;
+    max-height: 150px;
+    min-width: 200px;
+    min-height: 150px;
+    width: 200px;
+    height: 150px;
+    border: 1px solid black;
+}
+
+button {
+    height: 150px;
+    width: 205px;
+}
+
+#days-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}

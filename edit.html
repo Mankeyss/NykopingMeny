@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ändra meny</title>
+    <link rel="stylesheet" href="src/font.css">
+    <link rel="stylesheet" href="src/edit/edit.css">
+    <script src="src/edit/edit.js" defer></script>
 </head>
 <body>
-    <form>
-        <textarea placeholder="Måndag"></textarea>
-        <textarea placeholder="Tisdag"></textarea>
-        <textarea placeholder="Onsdag"></textarea>
-        <textarea placeholder="Torsdag"></textarea>
-        <textarea placeholder="Fredag"></textarea>
+    <div class="nav-bar">
+        <a href="/"><p id="return-button">Tillbaka</p></a>
+        <div class="restaurang-container-nav-bar">
+        </div>
+    </div>
+    <p class="title-p">Ändra Hemköp</p>
+    <form id="days-form">
+        <textarea placeholder="Måndag" id="monday-textarea"></textarea>
+        <textarea placeholder="Tisdag" id="tuesday-textarea"></textarea>
+        <textarea placeholder="Onsdag" id="wednesday-textarea"></textarea>
+        <textarea placeholder="Torsdag" id="thursday-textarea"></textarea>
+        <textarea placeholder="Fredag" id="friday-textarea"></textarea>
         <button type="submit">Ändra</button>
     </form>
 </body>

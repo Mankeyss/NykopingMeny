@@ -194,7 +194,8 @@ if(restaurang == 'hemkop') {
         
         for(i = 0; i < info.length-1; i++) {
           if(info[i+1]) {
-            info[i+1] += "<br>" + info[i].slice((i != 1 ? 4 : 7));
+            const line = info[i].slice(i != 1 ? 4 : 7);
+            info[i+1] += "<br>" + (line.charAt(0).toLowerCase() === line.charAt(0) ? '...' + line : line);
             info.splice(i, 1);
           } 
         }
@@ -252,7 +253,9 @@ if(restaurang == 'hemkop') {
         code.querySelector('.lunch-wrapper').classList.add('at-wrapper');
         const flexDiv = document.createElement('div');
 
-        
+        //console.log(cookieData);
+
+        code.querySelector('.lunch-wrapper ')
 
         flexDiv.classList.add('flex-container');
 

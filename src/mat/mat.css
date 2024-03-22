@@ -38,7 +38,19 @@ body {
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: space-between;
+}
+
+.nav-bar > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-bar > a {
+    color: black;
+    text-decoration: none;
+    margin-left: 10px;
 }
 
 .nav-bar-button {
