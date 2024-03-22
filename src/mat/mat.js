@@ -164,8 +164,8 @@ if(restaurang == 'hemkop') {
         info[3] = info[3].slice(8);
         info[4] = info[4].slice(7);
 
-        const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${info.join("$$")}` + '</body></html>'], 'mat-hemkop.html', {
-          type: 'text/html'
+        const data = new File([JSON.stringify(info)], 'mat-hemkop.json', {
+          type: 'application/json'
         })
   
         fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-hemkop.html', {"method":"post","body":data})
@@ -201,10 +201,10 @@ if(restaurang == 'hemkop') {
         code.querySelector('.lunch-wrapper').classList.add('at-wrapper');
         const flexDiv = document.createElement('div');
 
-        const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${code.querySelector('.lunch-wrapper').outerHTML}` + '</body></html>'], 'mat-at.html', {
-          type: 'text/html'
+        const data = new File([JSON.stringify(code.querySelector('.lunch-wrapper').outerHTML)], 'mat-at.json', {
+          type: 'application/json'
         })
-
+  
         fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-at.html', {"method":"post","body":data})
         .catch((error) => console.error('Error: ' + error));
 
@@ -256,8 +256,8 @@ if(restaurang == 'hemkop') {
       menuPart.querySelector('p:first-child').remove();
       menuPart.querySelector('p:first-child').classList.add('week-h2');
 
-      const data = new File([`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${menuPart.outerHTML}` + '</body></html>'], 'mat-nsu.html', {
-        type: 'text/html'
+      const data = new File([JSON.stringify(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>${menuPart.outerHTML}` + '</body></html>')], 'mat-nsu.json', {
+        type: 'application/json'
       })
 
       fetch('https://cors.sizable.workers.dev/https://prao.8m.se/mat-nsu.html', {"method":"post","body":data})
