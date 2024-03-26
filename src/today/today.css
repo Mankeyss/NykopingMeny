@@ -32,6 +32,9 @@ body {
     font-size: 18px;
     color: rgb(50, 50, 50);
     background-color: rgb(202, 202, 202);
+    height: 50px;
+    display: flex;
+    align-items: center;
 }
 
 .nav-bar > a {

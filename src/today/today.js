@@ -4,7 +4,7 @@ document.getElementById('title-p').innerHTML = days[day];
 
 function handleError() {
     //Handle error
-    window.location.href = "";
+    window.location.href = ".";
 }
 
 //Retrieve foods
@@ -68,4 +68,5 @@ if(day <= 4) {
     })();
 } else {
     //Saturday or sunday
+    handleError();
 }

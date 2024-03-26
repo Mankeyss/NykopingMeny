@@ -159,10 +159,12 @@ if(restaurang == 'hemkop') {
           info.splice(info.length-1, 1);
         }
         
-        info[0] = info[0].slice(5);
-        info[2] = info[2].slice(7);
-        info[3] = info[3].slice(8);
-        info[4] = info[4].slice(7);
+        try {
+          info[0] = info[0].slice(5);
+          info[2] = info[2].slice(7);
+          info[3] = info[3].slice(8);
+          info[4] = info[4].slice(7);
+        } catch (e) {}
 
         const data = new File([JSON.stringify(info)], 'mat-hemkop.json', {
           type: 'application/json'
@@ -226,13 +228,15 @@ if(restaurang == 'hemkop') {
           code.querySelector(`.left p:nth-child(1)`).prepend(code.querySelector(`.left h4:nth-child(1)`))
         }*/
 
-        code.querySelector('.left p').prepend(code.querySelector('.left h4'))
-        code.querySelector('.left p:nth-child(3)').prepend(code.querySelector('.left h4:nth-child(2)'));
-        code.querySelector('.left p:nth-child(4)').prepend(code.querySelector('.left h4:nth-child(3)'));
-
-        code.querySelector('.right p').prepend(code.querySelector('.right h4'))
-        code.querySelector('.right p:nth-child(3)').prepend(code.querySelector('.right h4:nth-child(2)'));
-        code.querySelector('.right p:nth-child(4)').prepend(code.querySelector('.right h4:nth-child(3)'));
+        try {
+          code.querySelector('.left p').prepend(code.querySelector('.left h4'))
+          code.querySelector('.left p:nth-child(3)').prepend(code.querySelector('.left h4:nth-child(2)'));
+          code.querySelector('.left p:nth-child(4)').prepend(code.querySelector('.left h4:nth-child(3)'));
+  
+          code.querySelector('.right p').prepend(code.querySelector('.right h4'))
+          code.querySelector('.right p:nth-child(3)').prepend(code.querySelector('.right h4:nth-child(2)'));
+          code.querySelector('.right p:nth-child(4)').prepend(code.querySelector('.right h4:nth-child(3)'));
+        } catch (e) {}
 
         flexDiv.appendChild(code.querySelector('.lunch-wrapper'))
 
